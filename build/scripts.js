@@ -45,7 +45,7 @@ function split(str, separator = " ") {
   return str.split(separator);
 }
 
-function checkVowCon(str, check) {
+function teljaVowCon(str, check) {
   let fjöldi = 0;
   for (const char of str.toLowerCase()) {
     if (check.includes(char)) {
@@ -76,6 +76,8 @@ function longest(str) {
 console.assert(longest("hæ hallo") === "hallo");
 console.assert(longest("hallo heimur!") === "heimur!", "greinarmerki eru með");
 console.assert(longest("a i") === "a", "skilar fyrsta lengsta");
+console.assert(longest(12) === null);
+console.assert(longest("") == "");
 
 function shortest(str) {
   // Útfæra
@@ -131,10 +133,10 @@ console.assert(
 console.assert(palindrome("") === false, "tómur strengur er ekki samhverfur");
 console.assert(palindrome("hah hah hah") === true, "bil skipta engu");
 
-
+//nota hjálparfallið teljaVowCon fyrir vowels og consonants
 function vowels(str) {
   if (isString(str)) {
-    return checkVowCon(str, VOWELS);
+    return teljaVowCon(str, VOWELS);
   }
   return null;
 }
@@ -143,7 +145,7 @@ console.assert(vowels("stf") === 0, "ef engir, skila núll");
 
 function consonants(str) {
   if (isString(str)) {
-    return checkVowCon(str, CONSONANTS);
+    return teljaVowCon(str, CONSONANTS);
   }
   return null;
 }
@@ -154,5 +156,43 @@ console.assert(consonants("eyyy") === 0, "ef engir, skila núll");
 // Leiðbeint ferli
 
 function start() {
-  // Útfæra
+  alert(
+    "Velkomin! Nú munt þú fá tækifæri til að slá inn streng og fá ýmsar upplýsingar um hann " +
+      "eins og lengsta og stysta orð, öfugan strenginn, fjölda sam- og sérhljóða og hvort strengurinn sé samhverfur. " +
+      "Vinsamlegast ýttu á OK til að halda áfram."
+  );
+  const input = prompt("Sláðu inn streng:");
+
+  if (isString(input) && input.trim() !== "") {
+    const lengsta = longest(input);
+    const stysta = shortest(input);
+    const reversed = reverse(input);
+    const vowelFjoldi = vowels(input);
+    const consonantFjoldi = consonants(input);
+    const erPalindrome = palindrome(input);
+
+    alert(
+      `Niðurstöður fyrir strenginn: ${input}\n` +
+        "\n" +
+        `Lengsta orð: ${lengsta}\n` +
+        `Stysta orð: ${stysta}\n` +
+        `Öfugur strengur: ${reversed}\n` +
+        `Fjöldi sérhljóða: ${vowelFjoldi}\n` +
+        `Fjöldi samhljóða: ${consonantFjoldi}\n` +
+        `Er strengurinn samhverfur: ${erPalindrome}`
+    );
+
+    console.info(`Niðurstöður fyrir strenginn: "${input}"`);
+    console.info(`Lengsta orð: ${lengsta}`);
+    console.info(`Stysta orð: ${stysta}`);
+    console.info(`Öfugur strengur: ${reversed}`);
+    console.info(`Fjöldi sérhljóða: ${vowelFjoldi}`);
+    console.info(`Fjöldi samhljóða: ${consonantFjoldi}`);
+    console.info(`Er strengurinn samhverfur: ${erPalindrome ? "Já" : "Nei"}`);
+    
+    const aftur = confirm("Viltu prófa aftur? Ýttu þá á OK, annars cancel.");
+    if (aftur) {
+      start();
+    }
+  }
 }
