@@ -161,11 +161,8 @@ function start() {
       "eins og lengsta og stysta orð, öfugan strenginn, fjölda sam- og sérhljóða og hvort strengurinn sé samhverfur. " +
       "Vinsamlegast ýttu á OK til að halda áfram."
   );
-
-  // Prompt for user input
   const input = prompt("Sláðu inn streng:");
 
-  // Check if input is valid and user did not cancel or leave it blank
   if (isString(input) && input.trim() !== "") {
     const lengsta = longest(input);
     const stysta = shortest(input);
